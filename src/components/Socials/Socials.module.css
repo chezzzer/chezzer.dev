@@ -1,0 +1,35 @@
+.socials {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.social {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.social span {
+    position: relative;
+}
+
+.social span::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 0%;
+    background-color: var(--primary);
+    transition: width 0.1s ease-in-out;
+}
+
+.social:hover span {
+    color: var(--heading) !important;
+}
+
+.social:hover span::after {
+    width: 100%;
+}

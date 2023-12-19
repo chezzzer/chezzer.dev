@@ -1,0 +1,17 @@
+.icon {
+    display: flex;
+    justify-content: center;
+}
+
+.icon svg {
+    fill: var(--heading);
+    width: 2.5rem;
+    height: 2.5rem;
+    aspect-ratio: 1/1;
+    transition: 0.3s;
+}
+
+.icon:hover svg {
+    transform: scale(1.1);
+    fill: var(--color);
+}

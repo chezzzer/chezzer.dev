@@ -1,0 +1,25 @@
+@keyframes breathe {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.25);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.radial {
+    --size: 600px;
+    --padding: 400px;
+    --sizePadding: calc(var(--size) + var(--padding));
+    background: radial-gradient(var(--size), var(--light), transparent 80%);
+    width: var(--sizePadding);
+    height: var(--sizePadding);
+    top: calc(var(--y) - (var(--sizePadding) / 2));
+    left: calc(var(--x) - (var(--sizePadding) / 2));
+    position: fixed;
+    z-index: -1;
+    animation: breathe 20s infinite ease-in-out;
+}
