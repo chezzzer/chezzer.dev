@@ -11,10 +11,12 @@ type Position = {
 };
 
 type PositionTag = string;
+
 type PositionLink = {
     name: string;
     url: string;
 };
+
 type PositionCompany = {
     name: string;
     url: string;
