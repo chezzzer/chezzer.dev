@@ -11,6 +11,25 @@ export const metadata: Metadata = {
     title: "Ryan Cherry",
     description:
         "Ryan Cherry is a software engineer who builds accessible, inclusive products and digital experiences for the web.",
+    keywords: [
+        "developer",
+        "web developer",
+        "software engineer",
+        "ryan cherry",
+        "ryan",
+        "cherry",
+        "web",
+        "designer",
+        "design",
+        "fullstack",
+        "fullstack engineer",
+        "fullstack developer",
+        "fullstack designer",
+        "frontend",
+        "back end",
+        "backend",
+        "full stack web developer",
+    ],
 };
 
 export default function RootLayout({
@@ -35,9 +54,9 @@ export default function RootLayout({
                             <h1 className="text-6xl font-extrabold fields">
                                 Ryan Cherry
                             </h1>
-                            <h4 className="text-2xl fields text-primary">
+                            <h2 className="text-2xl fields text-primary">
                                 Full-Stack Engineer
-                            </h4>
+                            </h2>
                             <p className="opacity-80 w-3/4">
                                 Ryan Cherry is a software engineer who builds
                                 accessible, inclusive products and digital
