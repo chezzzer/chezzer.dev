@@ -15,9 +15,10 @@ export default function Home() {
                     <a href="https://waikato.ac.nz" target="_blank">
                         Waikato University
                     </a>{" "}
-                    with a bachelor's in Computer Science. Alongside my studies,
-                    I am passionate about contributing to community welfare
-                    through online volunteering, where I organize events and{" "}
+                    with a bachelor&apos;s in Computer Science. Alongside my
+                    studies, I am passionate about contributing to community
+                    welfare through online volunteering, where I organize events
+                    and{" "}
                     <a href="https://coastercon.net" target="_blank">
                         conventions
                     </a>{" "}
