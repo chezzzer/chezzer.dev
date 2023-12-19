@@ -19,5 +19,7 @@ export async function checkTurnstile(
 
     const json = await result.json();
 
+    console.log(json);
+
     return Boolean(json.success);
 }
