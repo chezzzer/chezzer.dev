@@ -5,6 +5,7 @@ import Header from "@/components/Header/Header";
 import Socials from "@/components/Socials/Socials";
 import Status from "@/components/Status/Status";
 import Footer from "@/components/Footer/Footer";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
     title: "Ryan Cherry",
@@ -26,6 +27,7 @@ export default function RootLayout({
                 ></link>
             </head>
             <body>
+                <SpeedInsights />
                 <HoverRadial />
                 <main>
                     <div className="md:flex md:gap-10">
