@@ -3,7 +3,7 @@ import { checkTurnstile } from "@/inc/turnstile";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
-    const { email, message, turnstile } = await request.json();
+    const { email, message, token } = await request.json();
 
     if (request.method !== "POST") {
         return new NextResponse(
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     }
 
     if (process.env.NODE_ENV === "production") {
-        const turnstileOutcome = await checkTurnstile(turnstile, request.ip);
+        const turnstileOutcome = await checkTurnstile(token, request.ip);
         if (!turnstileOutcome) {
             return new NextResponse(
                 JSON.stringify({ error: "CAPTCHA failed." }),
