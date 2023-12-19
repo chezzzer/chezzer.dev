@@ -44,6 +44,11 @@ export default function RootLayout({
                     rel="stylesheet"
                     href="https://use.typekit.net/urn6xmu.css"
                 ></link>
+                <script
+                    defer
+                    src="https://static.cloudflareinsights.com/beacon.min.js"
+                    data-cf-beacon='{"token": "1d15f2e14bfe48d0bb18531de4fd26da"}'
+                ></script>
             </head>
             <body>
                 <SpeedInsights />
