@@ -24,6 +24,17 @@ type PositionCompany = {
 
 const positions: Position[] = [
     {
+        title: "Software Developer",
+        description:
+            "Developing and maintaining Rocketspark's award winning website builder.",
+        company: {
+            name: "Rocketspark",
+            url: "https://rocketspark.com",
+        },
+        start: "Mar 2024",
+        tags: ["PHP", "PhpStorm", "TypeScript", "Web Dev", "MySQL"],
+    },
+    {
         title: "Summer Intern",
         description:
             "Developing high quality design controls & systems for clients and partners using Rocketspark's platform.",
@@ -32,6 +43,7 @@ const positions: Position[] = [
             url: "https://rocketspark.com",
         },
         start: "Nov 2023",
+        end: "Mar 2024",
         tags: ["PHP", "PhpStorm", "TypeScript", "Web Dev", "MySQL"],
     },
     {

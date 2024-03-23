@@ -7,7 +7,7 @@
     --paragraph: #e8eddfcb;
     --primary: #f5cb5c;
     --gray: #292927;
-    --light: #414141;
+    --light: #4a4a4a;
     --background: #242423;
     --highlight: #f5cc5c7e;
 
@@ -19,6 +19,7 @@ body {
     background-size: 90px 90px;
     background-image: linear-gradient(90deg, var(--gray) 1px, transparent 0),
         linear-gradient(180deg, var(--gray) 1px, transparent 0);
+    background-attachment: fixed;
     color: var(--paragraph);
     font-family: "montserrat", sans-serif;
 }
