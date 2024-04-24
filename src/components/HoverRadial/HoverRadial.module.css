@@ -15,12 +15,10 @@
     mask-image: linear-gradient(90deg, #fff 1px, transparent 0),
         linear-gradient(180deg, #fff 1px, transparent 0);
     --size: 600px;
-    --padding: 400px;
-    --sizePadding: calc(var(--size) + var(--padding));
     background: radial-gradient(var(--size), var(--light), transparent 80%);
     background-size: 200vw 200vh;
-    background-position-y: calc(var(--y) - (var(--size) * 1.5));
-    background-position-x: calc(var(--x) - (var(--size) * 3.2));
+    background-position-y: calc(var(--y) + 100vh);
+    background-position-x: calc(var(--x) + 100vw);
     width: 100vw;
     height: 100vh;
     position: fixed;
