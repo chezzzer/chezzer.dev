@@ -10,6 +10,7 @@ import {
     SpotifyLogo,
 } from "@phosphor-icons/react/dist/ssr";
 import { MusicNoteSimple } from "@phosphor-icons/react";
+import Glucose from "./Glucose";
 
 const discordID = "195979856733929472";
 
@@ -94,6 +95,7 @@ export default function Status() {
                     </a>
                 </div>
             )}
+            <Glucose />
         </>
     );
 }
