@@ -53,12 +53,13 @@ export default function Glucose() {
 
     return (
         <div className="flex items-center gap-2 mt-1">
-            <Drop weight="bold" size={20}/>
+            <Drop weight="fill" size={20}/>
             <div>
                 {data.mmol.toFixed(1)}{" "}
                 <span className="opacity-50">mmol/L</span>
+                {" "}
+                <GlucoseIcon className="opacity-50" weight="bold" size={20} />
             </div>
-            <GlucoseIcon className="opacity-50" weight="bold" size={20} />
         </div>
     );
 }
