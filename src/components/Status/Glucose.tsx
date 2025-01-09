@@ -5,6 +5,7 @@ import {
     ArrowUp,
     ArrowUpRight,
     Icon,
+    Drop,
 } from "@phosphor-icons/react";
 import { useEffect, useMemo, useState } from "react";
 
@@ -52,11 +53,12 @@ export default function Glucose() {
 
     return (
         <div className="flex items-center gap-2 mt-1">
-            <GlucoseIcon weight="bold" size={20} />
+            <Drop weight="bold" size={20}/>
             <div>
                 {data.mmol.toFixed(1)}{" "}
                 <span className="opacity-50">mmol/L</span>
             </div>
+            <GlucoseIcon className="opacity-50" weight="bold" size={20} />
         </div>
     );
 }
