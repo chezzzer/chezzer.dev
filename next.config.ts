@@ -1,8 +1,12 @@
+import createMDX from "@next/mdx"
 import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
-    /* config options here */
+    pageExtensions: ["ts", "tsx", "md", "mdx"],
     cacheComponents: true,
+    outputFileTracingIncludes: {
+        "/**": ["./src/fonts/DigitalDisco.ttf"],
+    },
     partialPrefetching: true,
     turbopack: {
         rules: {
@@ -14,4 +18,19 @@ const nextConfig: NextConfig = {
     },
 }
 
-export default nextConfig
+const withMDX = createMDX({
+    options: {
+        remarkPlugins: [
+            "remark-frontmatter",
+            ["remark-mdx-frontmatter", { name: "frontmatter" }],
+            "remark-gfm",
+        ],
+        rehypePlugins: [
+            "rehype-slug",
+            ["rehype-autolink-headings", { behavior: "wrap" }],
+            ["rehype-pretty-code", { theme: "vesper", keepBackground: false }],
+        ],
+    },
+})
+
+export default withMDX(nextConfig)

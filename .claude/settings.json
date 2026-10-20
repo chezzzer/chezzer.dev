@@ -1,0 +1,12 @@
+{
+    "permissions": {
+        "deny": [
+            "Bash(git remote add *)",
+            "Bash(gh repo create)",
+            "Bash(gh repo create *)",
+            "PowerShell(git remote add *)",
+            "PowerShell(gh repo create)",
+            "PowerShell(gh repo create *)"
+        ]
+    }
+}
