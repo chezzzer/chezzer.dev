@@ -7,6 +7,15 @@ import {
     type Field,
     type Pointer,
 } from "~/components/hero/field"
+import {
+    createGame,
+    drawGame,
+    endGame,
+    revealAt,
+    startGame,
+    stepGame,
+    type Game,
+} from "~/components/hero/game"
 import { createCompositor } from "~/components/hero/lens"
 import {
     createMask,
@@ -32,9 +41,11 @@ type Layers = {
     height: number
     dpr: number
     field: Field
+    game: Game
     mask: TextLayer
     rim: TextLayer
-    radius: number
+    idleRadius: number
+    playRadius: number
     face: HTMLCanvasElement
     faceCtx: CanvasRenderingContext2D
     back: HTMLCanvasElement
@@ -96,7 +107,11 @@ export default function HeroCanvas({
         let lastInput = 0
         let hasInput = false
         let wasInside = false
+        let input: number | null = null
+        let radius = 0
+        let follow = 0
         const target: Pointer = { x: 0, y: 0 }
+        const rest: Pointer = { x: 0, y: 0 }
         const pointer: Pointer = { x: 0, y: 0 }
         const auto: Pointer = { x: 0, y: 0 }
 
@@ -128,24 +143,41 @@ export default function HeroCanvas({
                 dpr,
             }
             const mask = createMask(text)
+            const rim = createRim(text)
+            const field = createField(width, height, small ? 18 : 14)
+            const game = createGame({
+                field,
+                mask,
+                rim,
+                colors,
+                width,
+                height,
+                dpr,
+                small,
+            })
 
             layers = {
                 width,
                 height,
                 dpr,
-                field: createField(width, height, small ? 18 : 14),
+                field,
+                game,
                 mask,
-                rim: createRim(text),
-                radius: small ? 150 : 220,
+                rim,
+                idleRadius: small ? 150 : 220,
+                playRadius: small ? 70 : 90,
                 face,
                 faceCtx,
                 back,
                 backCtx,
             }
+            radius = layers.idleRadius
 
             if (!hasInput) {
                 target.x = mask.centerX - mask.wordWidth * 0.4
                 target.y = mask.centerY - height * 0.08
+                rest.x = target.x
+                rest.y = target.y
                 pointer.x = target.x
                 pointer.y = target.y
             }
@@ -159,11 +191,12 @@ export default function HeroCanvas({
                 field: layers.field,
                 pointer,
                 time,
-                radius: layers.radius,
+                radius,
                 palette,
                 colors,
                 mask: layers.mask.canvas,
                 rim: layers.rim.canvas,
+                alpha: revealAt(layers.game, time),
                 width: layers.width,
                 height: layers.height,
             })
@@ -176,12 +209,13 @@ export default function HeroCanvas({
                 width: layers.width,
                 height: layers.height,
             })
+            drawGame(layers.backCtx, layers.game, colors)
 
             compositor.draw({
                 face: layers.face,
                 back: layers.back,
                 pointer,
-                radius: layers.radius,
+                radius,
                 strength: bulge,
                 dpr: layers.dpr,
             })
@@ -197,23 +231,11 @@ export default function HeroCanvas({
                 layers.height * 0.22 * Math.sin(time * 0.53 + 1)
         }
 
-        const step = (dt: number) => {
+        const step = (now: number, time: number, dt: number) => {
             if (!layers) return
-            stepField(layers.field, {
-                pointer,
-                radius: layers.radius,
-                push,
-                dt,
-            })
-        }
+            const { game, field } = layers
 
-        const tick = (now: number) => {
-            if (cancelled || !layers) return
-            const time = now / 1000
-            const dt = lastTime
-                ? Math.min((now - lastTime) / 1000, 0.05)
-                : 0.016
-            lastTime = now
+            stepGame(game, field, { input, time, dt })
 
             const idle = now - lastInput
             if (idle > idleDelay) {
@@ -224,10 +246,28 @@ export default function HeroCanvas({
             }
 
             const ease = 1 - Math.exp(-dt * 8)
-            pointer.x += (target.x - pointer.x) * ease
-            pointer.y += (target.y - pointer.y) * ease
+            rest.x += (target.x - rest.x) * ease
+            rest.y += (target.y - rest.y) * ease
 
-            step(dt)
+            follow += ((game.playing ? 1 : 0) - follow) * ease
+            pointer.x = rest.x + (game.ball.x - rest.x) * follow
+            pointer.y = rest.y + (game.ball.y - rest.y) * follow
+
+            const goal = game.playing ? layers.playRadius : layers.idleRadius
+            radius += (goal - radius) * ease
+
+            stepField(field, { pointer, radius, push, dt })
+        }
+
+        const tick = (now: number) => {
+            if (cancelled || !layers) return
+            const time = now / 1000
+            const dt = lastTime
+                ? Math.min((now - lastTime) / 1000, 0.05)
+                : 0.016
+            lastTime = now
+
+            step(now, time, dt)
             draw(time)
 
             if (visible && !document.hidden) {
@@ -244,12 +284,17 @@ export default function HeroCanvas({
             frame = requestAnimationFrame(tick)
         }
 
-        const onPointer = (event: PointerEvent) => {
+        const locate = (event: PointerEvent) => {
             const rect = canvas.getBoundingClientRect()
             const x = event.clientX - rect.left
             const y = event.clientY - rect.top
             const inside =
                 x >= 0 && y >= 0 && x <= rect.width && y <= rect.height
+            return { x, y, inside }
+        }
+
+        const onPointer = (event: PointerEvent) => {
+            const { x, y, inside } = locate(event)
             if (!inside) {
                 if (wasInside)
                     lastInput = performance.now() - idleDelay - idleRamp
@@ -259,20 +304,37 @@ export default function HeroCanvas({
             wasInside = true
             target.x = x
             target.y = y
+            input = x
             lastInput = performance.now()
             hasInput = true
             if (reduceMotion && layers) {
+                rest.x = target.x
+                rest.y = target.y
                 pointer.x = target.x
                 pointer.y = target.y
-                step(0.05)
+                stepField(layers.field, { pointer, radius, push, dt: 0.05 })
                 draw(lastInput / 1000)
             }
+        }
+
+        const onPress = (event: PointerEvent) => {
+            onPointer(event)
+            if (reduceMotion || !layers) return
+            const { x, y, inside } = locate(event)
+            if (inside && !layers.game.playing) {
+                startGame(layers.game, x, y)
+            }
+        }
+
+        const onRelease = (event: PointerEvent) => {
+            if (event.pointerType === "touch") input = null
         }
 
         const onVisibility = () => resume()
 
         const observer = new IntersectionObserver(([entry]) => {
             visible = entry?.isIntersecting ?? true
+            if (!visible && layers) endGame(layers.game)
             resume()
         })
         const resizer = new ResizeObserver(() => {
@@ -293,6 +355,11 @@ export default function HeroCanvas({
             observer.observe(canvas)
             resizer.observe(canvas)
             window.addEventListener("pointermove", onPointer, { passive: true })
+            window.addEventListener("pointerdown", onPress, { passive: true })
+            window.addEventListener("pointerup", onRelease, { passive: true })
+            window.addEventListener("pointercancel", onRelease, {
+                passive: true,
+            })
             document.addEventListener("visibilitychange", onVisibility)
             resume()
         }
@@ -305,6 +372,9 @@ export default function HeroCanvas({
             observer.disconnect()
             resizer.disconnect()
             window.removeEventListener("pointermove", onPointer)
+            window.removeEventListener("pointerdown", onPress)
+            window.removeEventListener("pointerup", onRelease)
+            window.removeEventListener("pointercancel", onRelease)
             document.removeEventListener("visibilitychange", onVisibility)
         }
     }, [])

@@ -15,6 +15,7 @@ export type Field = {
     cols: number
     rows: number
     points: FieldPoint[]
+    alive: Uint8Array
 }
 
 export function createField(
@@ -40,7 +41,22 @@ export function createField(
         }
     }
 
-    return { cell, cols, rows, points }
+    return {
+        cell,
+        cols,
+        rows,
+        points,
+        alive: new Uint8Array(points.length).fill(1),
+    }
+}
+
+export function cellAt(field: Field, x: number, y: number) {
+    const col = Math.floor(x / field.cell)
+    const row = Math.floor(y / field.cell)
+    if (col < 0 || row < 0 || col >= field.cols || row >= field.rows) {
+        return -1
+    }
+    return row * field.cols + col
 }
 
 function hash(x: number, y: number, z: number) {

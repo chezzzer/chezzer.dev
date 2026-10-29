@@ -30,7 +30,7 @@ export function parseHex(value: string): Rgb {
     return [(number >> 16) & 255, (number >> 8) & 255, number & 255]
 }
 
-function mix(a: Rgb, b: Rgb, t: number): Rgb {
+export function mix(a: Rgb, b: Rgb, t: number): Rgb {
     return [
         Math.round(a[0] + (b[0] - a[0]) * t),
         Math.round(a[1] + (b[1] - a[1]) * t),
@@ -109,6 +109,7 @@ export function drawPoints(ctx: CanvasRenderingContext2D, state: PointsState) {
         if (cache.stale) {
             cache.values[i] = brightnessFor(point.x, point.y, point.heat, time)
         }
+        if (!sparse && field.alive[i] === 0) continue
         let brightness = cache.values[i]!
 
         if (sparse) {
@@ -161,15 +162,19 @@ export type FrameState = {
     colors: Colors
     mask: HTMLCanvasElement
     rim: HTMLCanvasElement
+    alpha: number
     width: number
     height: number
 }
 
 export function drawFrame(ctx: CanvasRenderingContext2D, state: FrameState) {
-    const { pointer, time, radius, colors, mask, rim, width, height } = state
+    const { pointer, time, radius, colors, mask, rim, alpha, width, height } =
+        state
 
     ctx.globalCompositeOperation = "source-over"
+    ctx.globalAlpha = 1
     ctx.clearRect(0, 0, width, height)
+    ctx.globalAlpha = alpha
     ctx.fillStyle = rgba(colors.base)
     ctx.fillRect(0, 0, width, height)
 
@@ -199,6 +204,7 @@ export function drawFrame(ctx: CanvasRenderingContext2D, state: FrameState) {
     ctx.drawImage(mask, 0, 0, width, height)
     ctx.globalCompositeOperation = "source-over"
     ctx.drawImage(rim, 0, 0, width, height)
+    ctx.globalAlpha = 1
 }
 
 export type TextLayer = {
