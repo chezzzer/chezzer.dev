@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import BackLink from "~/components/layout/back-link"
 import JsonLd from "~/components/layout/json-ld"
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
@@ -31,6 +32,7 @@ export async function generateMetadata({
 export default function WorkDetailPage({ params }: PageProps<"/work/[slug]">) {
     return (
         <article className="site-container mt-6">
+            <BackLink href="/work" label="all work" />
             <Suspense fallback={<DetailSkeleton />}>
                 <WorkDetail params={params} />
             </Suspense>

@@ -3,7 +3,7 @@ export const site = {
     fullName: "Ryan Cherry",
     url: "https://chezzer.dev",
     description:
-        "I'm Chezzer, aka Ryan Cherry. I work on the website builder at Rocketspark and build websites and stream tools for Minecraft events.",
+        "hey, I'm chezzer (Ryan Cherry). I work on the website builder at Rocketspark and make websites and stream tools for Minecraft events.",
     timeZone: "Pacific/Auckland",
     discordId: "195979856733929472" as const,
     glucoseSocket: "wss://dexcom.chezzer.dev/socket",
@@ -15,6 +15,7 @@ export const navItems = [
     { href: "/writing", label: "writing" },
     { href: "/guestbook", label: "guestbook" },
     { href: "/about", label: "about" },
+    { href: "/mixes", label: "mixes" },
 ] as const
 
 export const socials = [

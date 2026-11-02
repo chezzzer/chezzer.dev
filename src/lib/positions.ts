@@ -14,14 +14,14 @@ export const positions: Position[] = [
         title: "Developer",
         org: "Timbers Studios",
         start: "2025-01",
-        note: "Minecraft events, tournament sites and overlays.",
+        note: "websites and stream overlays for Minecraft events",
     },
     {
         title: "Software Developer",
         org: "Rocketspark",
         href: "https://www.rocketspark.com",
         start: "2024-03",
-        note: "Building and maintaining the website builder.",
+        note: "working on the website builder",
     },
     {
         title: "Summer Intern",
@@ -29,14 +29,14 @@ export const positions: Position[] = [
         href: "https://www.rocketspark.com",
         start: "2023-11",
         end: "2024-03",
-        note: "Design controls and systems for clients and partners.",
+        note: "worked on design controls for clients and partners",
     },
     {
         title: "Director",
         org: "Bundle Group",
         href: "https://bundlegroup.gg",
         start: "2022-10",
-        note: "The studio behind The Atlas, CoasterCon and C&C LIVE.",
+        note: "the studio behind The Atlas, CoasterCon and C&C LIVE",
     },
     {
         title: "Student Intern",
@@ -50,7 +50,7 @@ export const positions: Position[] = [
         org: "Coasters & Crafters",
         start: "2020-04",
         end: "2025-12",
-        note: "A social platform for gamers.",
+        note: "a server list and community site for Minecraft servers",
     },
     {
         title: "Web Developer",

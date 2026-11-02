@@ -58,20 +58,15 @@ export default async function HomePage() {
                 </Heading>
                 <div className="prose-chezzer prose mt-6 max-w-[58ch] text-lg leading-8 text-text-muted">
                     <p>
-                        I&apos;m Ryan. I work on the website builder at{" "}
+                        aka Ryan. I work on the website builder at{" "}
                         <a href="https://www.rocketspark.com" target="_blank">
                             Rocketspark
                         </a>
-                        , and outside of that I mostly build websites and
-                        broadcast tools for Minecraft events like Midoffs, The
-                        Last Stand and Gridlock. I&apos;m also doing a computer
-                        science degree at{" "}
-                        <a href="https://waikato.ac.nz" target="_blank">
-                            Waikato
-                        </a>
-                        . Say hi in the <Link href="/guestbook">guestbook</Link>{" "}
-                        if you want, or{" "}
-                        <Link href="/about">learn more about me</Link>.
+                        , and the rest of the time I&apos;m usually making
+                        websites and stream stuff for Minecraft events like
+                        Midoffs, The Last Stand and Gridlock. say hi in the{" "}
+                        <Link href="/guestbook">guestbook</Link> if you want, or{" "}
+                        <Link href="/about">read more about me</Link>.
                     </p>
                 </div>
 

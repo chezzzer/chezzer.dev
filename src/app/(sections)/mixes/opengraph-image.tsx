@@ -5,5 +5,5 @@ export const size = ogSize
 export const contentType = ogContentType
 
 export default function Image() {
-    return ogImage({ label: "/// mixes", title: "mixes for whenever" })
+    return ogImage({ label: "/// mixes", title: "mixtapes for locking in" })
 }

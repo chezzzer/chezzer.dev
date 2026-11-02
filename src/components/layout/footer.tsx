@@ -17,7 +17,7 @@ export default function Footer() {
                 <Panel>
                     <p className="font-mono text-base text-text">{site.name}</p>
                     <p className="mt-2 max-w-[28ch] text-sm text-text-muted">
-                        Designed and developed by chezzer in New Zealand.
+                        designed and built by chezzer in New Zealand.
                     </p>
                     <p className="mt-6">
                         <LocalTime />

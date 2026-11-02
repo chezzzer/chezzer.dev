@@ -14,6 +14,7 @@ export default function WorkCard({ work }: { work: Work }) {
                     <Image
                         src={work.cover.src}
                         alt={work.cover.alt}
+                        quality={90}
                         fill
                         sizes="(min-width: 1024px) 340px, (min-width: 640px) 50vw, 100vw"
                         className="object-cover opacity-90 transition-opacity group-hover:opacity-100"

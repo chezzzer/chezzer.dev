@@ -5,6 +5,10 @@ import type { Mix } from "~/lib/content"
 import { formatMonth } from "~/lib/format"
 
 export default function MixCard({ mix }: { mix: Mix }) {
+    const tags = mix.comingSoon
+        ? mix.genres
+        : [...mix.genres, platformNames[mix.platform].toLowerCase()]
+
     return (
         <Link
             href={`/mixes/${mix.slug}`}
@@ -28,16 +32,14 @@ export default function MixCard({ mix }: { mix: Mix }) {
             </div>
             <div className="flex min-w-0 flex-col">
                 <p className="label">
-                    {formatMonth(mix.date)} / {mix.duration}
+                    {formatMonth(mix.date)} /{" "}
+                    {mix.comingSoon ? "coming soon" : mix.duration}
                 </p>
                 <p className="mt-2 font-mono text-lg text-text group-hover:text-ember">
                     {mix.title}
                 </p>
                 <p className="mt-auto pt-3 label text-text-faint">
-                    {[
-                        ...mix.genres,
-                        platformNames[mix.platform].toLowerCase(),
-                    ].join("  /  ")}
+                    {tags.join("  /  ")}
                 </p>
             </div>
         </Link>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { orgs, type Mix, type Work, type Writing } from "~/lib/content"
+import { orgs, type ReleasedMix, type Work, type Writing } from "~/lib/content"
 import { site, socials } from "~/lib/site"
 
 export function pageMetadata({
@@ -94,7 +94,7 @@ function isoDuration(duration: string) {
     return `PT${hours ? `${hours}H` : ""}${minutes ? `${minutes}M` : ""}${seconds}S`
 }
 
-export function mixJsonLd(mix: Mix): JsonLd {
+export function mixJsonLd(mix: ReleasedMix): JsonLd {
     return {
         "@context": "https://schema.org",
         "@type": "MusicRecording",

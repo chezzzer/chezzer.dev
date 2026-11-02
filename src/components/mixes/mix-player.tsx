@@ -3,13 +3,13 @@
 import { PlayIcon } from "@phosphor-icons/react"
 import { useState } from "react"
 import { platformNames } from "~/components/mixes/embed"
-import type { Mix } from "~/lib/content"
+import type { ReleasedMix } from "~/lib/content"
 
 export default function MixPlayer({
     mix,
     embedUrl,
 }: {
-    mix: Mix
+    mix: ReleasedMix
     embedUrl: string
 }) {
     const [loaded, setLoaded] = useState(false)

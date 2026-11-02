@@ -16,6 +16,9 @@ const nextConfig: NextConfig = {
             },
         },
     },
+    images: {
+        qualities: [90, 75],
+    },
 }
 
 const withMDX = createMDX({

@@ -1,0 +1,67 @@
+---
+title: Coasters & Crafters
+summary: An online Minecraft server community website focusing on social features and advertisement.
+date: 2022-02-01
+org: bundle
+role: Director and developer
+tags: [nextjs, pocketbase, ui, ux]
+featured: false
+status: archived
+cover:
+    src: /images/work/coasters-and-crafters/homepage.webp
+    alt: "Coasters & Crafters homepage"
+links:
+    - label: coastersandcrafters.com
+      href: https://coastersandcrafters.com
+---
+
+Coasters & Crafters was a volunteer website I did, started in 2021 and ending in 2024. The website's main purpose was to be an "enhanced server list" where Minecraft communities can advertise their server, make posts about it and attend events with the server.
+
+The main focus of the website was Minecraft Theme Park communities, and each year we would put on an event called Coaster Con (or C&C LIVE in latent years).
+
+The homepage featured communities at random, so players could explore new communities if they wanted to.
+
+![Coasters & Crafters homepage](/images/work/coasters-and-crafters/homepage.webp)
+
+The website was build using NextJS, using Pocketbase as the backend user management system and database. I used Bootstrap v5 as that's what I knew from my PHP days, and for the most part, custom forms and user interfaces.
+
+This project was the first time I used Next, and I learnt quite a bit from it during it, like an introduction to the interesting ways NextJS 14 handled caching, and learning the difference between SSR, ISR, and Static rendering.
+
+## User & community management
+
+The website featured many user experiences like editing your account and managing your community.
+
+![Coasters & Crafters user management](/images/work/coasters-and-crafters/user-management.webp)
+![Coasters & Crafters community management](/images/work/coasters-and-crafters/community-management.webp)
+
+## Pinging Minecraft communities
+
+One challenge this site had was that we wanted to ping all the Minecraft communities to get online status and how many players were playing on the server. This proved challenging given the 1000+ Minecraft communities that we had on the site. I ended up making a node script that ran every 10 minutes, pinging 5 servers at once in chunks. This was ran on the VPS that we had running for this project.
+
+## Learnings
+
+NextJS can be really good, until it's not. I made many anti-patterns in this project, including this classic:
+
+```typescript
+const [account, setAccount] = useState<User>(user)
+
+useEffect(() => {
+    try {
+        pb.collection("account").subscribe(account.id, (e) => {
+            setAccount(e.record as unknown as User)
+        })
+    } catch (_) {}
+}, [account])
+```
+
+Theres many things wrong with this.
+
+- `useEffect` should not be used here, or should be hidden away in a hook if Pocketbase doesn't give the account in a nice way.
+- The effect hook depends on state set the in the hook.
+- The type casting is dangerous, and basically provides no benefit of being typed.
+- Why is this not a hook.
+- Why will it even error, not even a comment saying why that situation will occur, and why is it not logged?
+
+### Anyway
+
+The website is still up today, and was a great starting point using React and NextJS. The source is not available, but the website is still up, or available on the wayback machine.

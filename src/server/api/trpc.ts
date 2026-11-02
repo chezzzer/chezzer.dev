@@ -27,7 +27,8 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
         return {
             ...shape,
             message: zodError
-                ? (zodError.issues[0]?.message ?? "Invalid input")
+                ? (zodError.issues[0]?.message ??
+                  "something's not right there, try again")
                 : shape.message,
             data: {
                 ...shape.data,

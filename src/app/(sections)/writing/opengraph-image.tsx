@@ -5,5 +5,5 @@ export const size = ogSize
 export const contentType = ogContentType
 
 export default function Image() {
-    return ogImage({ label: "/// writing", title: "notes and such" })
+    return ogImage({ label: "/// writing", title: "writeups and other things" })
 }

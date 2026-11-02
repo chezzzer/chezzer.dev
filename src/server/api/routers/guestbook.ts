@@ -64,15 +64,19 @@ export const guestbookRouter = createTRPCRouter({
     create: publicProcedure
         .input(
             z.object({
-                name: z.string().trim().min(1, "Add a name").max(40),
-                message: z.string().trim().min(1, "Write something").max(280),
+                name: z.string().trim().min(1, "add a name").max(40),
+                message: z
+                    .string()
+                    .trim()
+                    .min(1, "write something first")
+                    .max(280),
                 url: z
                     .string()
                     .trim()
                     .max(200)
                     .refine(
                         (value) => value === "" || /^https?:\/\//.test(value),
-                        "Links need to start with http"
+                        "links need to start with http"
                     )
                     .optional(),
                 background: z.enum(backgroundIds),
@@ -86,7 +90,7 @@ export const guestbookRouter = createTRPCRouter({
             if (!human) {
                 throw new TRPCError({
                     code: "FORBIDDEN",
-                    message: "The human check did not pass. Try again.",
+                    message: "the captcha didn't pass, try again",
                 })
             }
 
@@ -96,7 +100,7 @@ export const guestbookRouter = createTRPCRouter({
             ) {
                 throw new TRPCError({
                     code: "BAD_REQUEST",
-                    message: "Keep it clean.",
+                    message: "keep it clean please",
                 })
             }
 
@@ -110,7 +114,7 @@ export const guestbookRouter = createTRPCRouter({
             if (recent >= rateLimit) {
                 throw new TRPCError({
                     code: "TOO_MANY_REQUESTS",
-                    message: "That is plenty for now. Come back in a bit.",
+                    message: "that's plenty for now, come back in a bit",
                 })
             }
 

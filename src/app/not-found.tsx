@@ -19,8 +19,8 @@ export default function NotFound() {
                 lines={["nothing", "here"]}
             />
             <p className="mt-6 max-w-[58ch] text-lg leading-8 text-text-muted">
-                That page does not exist, or it moved. The home page is a safe
-                bet.
+                this page doesn&apos;t exist, or it moved somewhere. probably
+                best to head back home..
             </p>
             <p className="mt-8">
                 <Link

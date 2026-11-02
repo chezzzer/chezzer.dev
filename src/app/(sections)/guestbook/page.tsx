@@ -1,16 +1,16 @@
 import { Suspense } from "react"
-import { pageMetadata } from "~/lib/seo"
 import GuestbookForm from "~/components/guestbook/guestbook-form"
 import GuestbookWall from "~/components/guestbook/guestbook-wall"
 import Section from "~/components/layout/section"
 import SectionHeader from "~/components/layout/section-header"
 import StackedHeading from "~/components/layout/stacked-heading"
+import { pageMetadata } from "~/lib/seo"
 import { api } from "~/trpc/server"
 
 export const metadata = pageMetadata({
     title: "Guestbook",
     description:
-        "Leave a note on chezzer.dev. Pick a background and a colour, and it goes on the wall.",
+        "leave a note on chezzer.dev. pick a background and a colour and it goes up on the wall.",
     path: "/guestbook",
 })
 
@@ -18,13 +18,20 @@ export default function GuestbookPage() {
     return (
         <Section className="mt-6">
             <SectionHeader label="guestbook" />
-            <StackedHeading as="h1" className="mt-8" lines={["say", "hi"]} />
+            <StackedHeading
+                as="h1"
+                className="mt-8"
+                lines={["leave", "a note"]}
+            />
             <p className="mt-6 max-w-[58ch] text-lg leading-8 text-text-muted">
-                Leave a note. Pick a background and a colour, and it goes on the
-                wall.
+                who are you? what are you doing here? if you don’t know, thats
+                okay, but at least write something..
             </p>
             <div className="mt-10 max-w-xl">
                 <GuestbookForm />
+            </div>
+            <div className="mt-10 max-w-xl text-text-muted/50">
+                yes there is captcha and censoring on this.
             </div>
             <div className="mt-16">
                 <Suspense fallback={<WallSkeleton />}>

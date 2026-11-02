@@ -14,6 +14,7 @@ export const orgs = {
     bundle: "Bundle Group",
     personal: "Personal",
     university: "University",
+    eg: "Evil Geniuses",
 } as const
 
 export type Org = keyof typeof orgs
@@ -22,8 +23,8 @@ const imageSchema = z.object({
     src: z.string(),
     alt: z.string(),
     caption: z.string().optional(),
-    width: z.number().int().positive(),
-    height: z.number().int().positive(),
+    width: z.number().int().positive().optional(),
+    height: z.number().int().positive().optional(),
 })
 
 const workSchema = z.object({
@@ -38,6 +39,7 @@ const workSchema = z.object({
     featured: z.boolean().default(false),
     links: z.array(z.object({ label: z.string(), href: z.url() })).default([]),
     status: z.enum(["shipped", "ongoing", "archived"]).default("shipped"),
+    draft: z.boolean().default(false),
 })
 
 const writingSchema = z.object({
@@ -49,15 +51,24 @@ const writingSchema = z.object({
     draft: z.boolean().default(false),
 })
 
-const mixSchema = z.object({
+const mixBaseSchema = z.object({
     title: z.string(),
     date: z.iso.date(),
-    platform: z.enum(["mixcloud", "soundcloud"]),
-    url: z.url(),
     genres: z.array(z.string()).default([]),
-    duration: z.string(),
     cover: imageSchema.optional(),
 })
+
+const mixSchema = z.union([
+    mixBaseSchema.extend({
+        comingSoon: z.literal(true),
+    }),
+    mixBaseSchema.extend({
+        comingSoon: z.literal(false).default(false),
+        platform: z.enum(["mixcloud", "soundcloud"]),
+        url: z.url(),
+        duration: z.string(),
+    }),
+])
 
 export type WorkImage = z.infer<typeof imageSchema>
 export type Work = z.infer<typeof workSchema> & { slug: string }
@@ -66,6 +77,7 @@ export type Writing = z.infer<typeof writingSchema> & {
     readingMinutes: number
 }
 export type Mix = z.infer<typeof mixSchema> & { slug: string }
+export type ReleasedMix = Extract<Mix, { comingSoon: false }>
 
 export type TocItem = { depth: number; title: string; url: string }
 
@@ -107,7 +119,7 @@ export async function listWork(): Promise<Work[]> {
             ...workSchema.parse(await frontmatterOf("work", slug)),
         }))
     )
-    return items.sort(byDateDesc)
+    return items.filter((item) => !item.draft).sort(byDateDesc)
 }
 
 export async function getWork(slug: string) {

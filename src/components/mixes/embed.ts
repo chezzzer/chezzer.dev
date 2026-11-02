@@ -1,6 +1,6 @@
-import type { Mix } from "~/lib/content"
+import type { ReleasedMix } from "~/lib/content"
 
-export function embedUrlFor(mix: Mix) {
+export function embedUrlFor(mix: ReleasedMix) {
     if (mix.platform === "mixcloud") {
         const feed = new URL(mix.url).pathname
         return `https://www.mixcloud.com/widget/iframe/?hide_cover=1&light=0&feed=${encodeURIComponent(feed)}`

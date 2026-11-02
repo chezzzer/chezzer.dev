@@ -72,7 +72,7 @@ export default function GuestbookForm() {
     const status = create.error
         ? create.error.message
         : checkFailed
-          ? "The human check did not finish. Try again."
+          ? "the captcha didn't finish, try again"
           : posted
             ? "posted. thanks."
             : ""
@@ -95,7 +95,7 @@ export default function GuestbookForm() {
                         onChange={(event) =>
                             setMessage(event.target.value.slice(0, maxMessage))
                         }
-                        placeholder="Leave a note, a doodle in text, whatever you like"
+                        placeholder="write whatever.. a note, a doodle in text, anything"
                         rows={4}
                         required
                         aria-label="Message"

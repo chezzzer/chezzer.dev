@@ -21,7 +21,9 @@ export async function generateMetadata({
     if (!item) return { title: "Not found" }
     return pageMetadata({
         title: item.title,
-        description: `A ${item.duration} mix. ${item.genres.join(", ")}.`,
+        description: item.comingSoon
+            ? "first mix is on the way."
+            : `a ${item.duration} mix. ${item.genres.join(", ")}.`,
         path: `/mixes/${slug}`,
         type: "website",
     })
@@ -50,7 +52,7 @@ async function MixDetail({
         <>
             <JsonLd
                 data={[
-                    mixJsonLd(mix),
+                    ...(mix.comingSoon ? [] : [mixJsonLd(mix)]),
                     breadcrumbJsonLd([
                         { name: "mixes", path: "/mixes" },
                         { name: mix.title, path: `/mixes/${slug}` },
@@ -60,7 +62,9 @@ async function MixDetail({
             <header className="border-y border-line py-10 sm:py-14">
                 <p className="flex flex-wrap items-center gap-x-3 label">
                     <time dateTime={mix.date}>{formatDate(mix.date)}</time>
-                    <span className="text-text-faint">{mix.duration}</span>
+                    <span className="text-text-faint">
+                        {mix.comingSoon ? "coming soon" : mix.duration}
+                    </span>
                 </p>
                 <h1 className="mt-4 max-w-[24ch] text-3xl leading-tight sm:text-5xl">
                     {mix.title}
@@ -72,17 +76,24 @@ async function MixDetail({
                 )}
             </header>
             <div className="py-10">
-                <MixPlayer mix={mix} embedUrl={embedUrlFor(mix)} />
-                <p className="mt-3 label">
-                    <a
-                        href={mix.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="hover:text-text"
-                    >
-                        open on {platformNames[mix.platform].toLowerCase()}
-                    </a>
-                </p>
+                {mix.comingSoon ? (
+                    <p className="label">not up yet</p>
+                ) : (
+                    <>
+                        <MixPlayer mix={mix} embedUrl={embedUrlFor(mix)} />
+                        <p className="mt-3 label">
+                            <a
+                                href={mix.url}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="hover:text-text"
+                            >
+                                open on{" "}
+                                {platformNames[mix.platform].toLowerCase()}
+                            </a>
+                        </p>
+                    </>
+                )}
             </div>
             <div className="prose-chezzer prose pb-12">
                 <Content />
