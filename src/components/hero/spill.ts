@@ -1,5 +1,6 @@
+import { drawDots } from "~/components/hero/dots"
 import { type Field } from "~/components/hero/field"
-import { drawPoints, type Palette } from "~/components/hero/render"
+import { type Palette } from "~/components/hero/palette"
 
 export type SpillState = {
     field: Field
@@ -14,7 +15,7 @@ export function drawSpill(ctx: CanvasRenderingContext2D, state: SpillState) {
 
     ctx.globalCompositeOperation = "source-over"
     ctx.clearRect(0, 0, width, height)
-    drawPoints(ctx, { field, palette, time, dim: 0.6, sparse: true })
+    drawDots(ctx, { field, palette, time, dim: 0.6, sparse: true })
 
     const radius = width * 0.5
     const fade = ctx.createRadialGradient(0, 0, 0, 0, 0, radius)
