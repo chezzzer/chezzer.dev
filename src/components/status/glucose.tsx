@@ -9,6 +9,7 @@ import {
     DropIcon,
     type Icon,
 } from "@phosphor-icons/react"
+import Link from "next/link"
 import { useSocket } from "~/components/status/use-socket"
 import { site } from "~/lib/site"
 
@@ -36,7 +37,10 @@ export default function Glucose() {
     const Trend = trendIcons[reading.trend]
 
     return (
-        <div className="flex items-center gap-2">
+        <Link
+            className="flex items-center gap-2"
+            href="/writing/blood-sugar-monitor"
+        >
             <DropIcon size={16} weight="fill" className="text-text-muted" />
             <span className="font-mono text-sm text-text tabular-nums">
                 {reading.mmol.toFixed(1)}
@@ -45,6 +49,6 @@ export default function Glucose() {
             {Trend && (
                 <Trend size={14} weight="bold" className="text-text-muted" />
             )}
-        </div>
+        </Link>
     )
 }

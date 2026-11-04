@@ -11,8 +11,10 @@ const contentRoot = path.join(process.cwd(), "src", "content")
 export const orgs = {
     rocketspark: "Rocketspark",
     timbers: "Timbers Studios",
+    bumpy: "Bumpy Events",
     bundle: "Bundle Group",
     personal: "Personal",
+    timebound: "Timebound",
     university: "University",
     eg: "Evil Geniuses",
 } as const
@@ -35,6 +37,7 @@ const workSchema = z.object({
     role: z.string(),
     tags: z.array(z.string()).default([]),
     cover: imageSchema.optional(),
+    logo: imageSchema.optional(),
     images: z.array(imageSchema).default([]),
     featured: z.boolean().default(false),
     links: z.array(z.object({ label: z.string(), href: z.url() })).default([]),

@@ -1,0 +1,39 @@
+---
+title: why is there a weird number on my homepage?
+summary: what is the random number that shows different values on my homepage?
+date: 2026-11-04
+tags: [diabetes, dexcom, real-life]
+---
+
+so you may have noticed a random number sitting next to my online status. this is actually my blood sugar reading, live on my website.
+
+## what is "blood sugar"?
+
+so if you didn't know already, I have type 1 diabetes. I got diagnosed at the ripe age of 11, which to be honest, was a pretty bad time. I can remember getting a bunch of people saying their apologies and my mum crying on the car ride over to the hospital. But 11 year old me kind of didn't really grasp the sense of what had just happened.
+
+I mean I still don't think about it too much. yes sometimes I realize I might live a shorter life than most, and that I could have some pretty major complications later in life, but I try not to think about it too much.
+
+blood sugar is the amount of sugar that is in my blood *duh*. my job as a diabetic is to basically manage this myself. normal people have a pancreas that does this for them, but unfortunately, mine decided to get eaten by a stomach bug (*gross oversimplification*).
+
+usually 5-8 mmol/L is pretty good. anything over this and it's not great, but usually I sit about 4-13.5, which is a pretty safe range. sometimes I will go up to 20, which is not good at all. this normally means my insulin pump has died.
+
+I manage my blood sugar by administering insulin through my insulin pump. insulin makes it go down, while food or carbohydrates makes it go up, making it basically an internal battle with myself on how my body will react to today's carbohydrates.
+
+## why put a kind of sensitive piece health data on my website?
+
+I guess it's just for fun and it also keeps me thinking about it. It's an interesting insight on what I am doing, whether I am sleeping or having a bad time, you can probably tell.
+
+## how does it work?
+
+so a part of my management routine, I have something called a "closed loop system". this basically means that I have a little device on my stomach that tracks my blood sugar level every 5 minutes, so my insulin pump can make decisions for me based off where its going. this system is called Control-IQ, and it largely sucks, but is the only funded option in New Zealand.
+
+since this blood sugar monitor, or CGM, constantly monitors my blood sugar, it publishes it to a place where my diabetes nurse can look at it, and this is where we can intercept some stuff.
+
+theres a few public repos out there that has reverse engineered this API to provide blood sugar data free of charge for your CGM, over strong authentication. this is pretty cool, since you can technically make your own closed loop systems if you wanted to. however, I decided to make a public api wrapper for it.
+
+you can hit [dexcom.chezzer.dev](https://dexcom.chezzer.dev) to get a live reading of my blood sugar, or alternatively, you can open a websocket connection to get a constant stream whenever it changes.
+
+## what can I do with this?
+
+nothing really. if anything I just use it as a test address, like example.com. but there is something I have made that hooks into this system which is pretty cool. at my desk at work, I am always struggling to keep track of my levels, as usually it's the last thing on my mind. I am a very visual person, so I wanted a way to see my blood sugar level without having to keep something open on my monitor or keep looking at my pump, so I made this, a little pico e-paper display that shows my blood sugar, working from this very API.
+
